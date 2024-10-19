@@ -137,7 +137,7 @@ public:
     }
 
     // Print the hash table
-    void PrintTable() {
+    void printTable() {
         for (int i = 0; i < capacity; i++) {
             if (table[i]==-1){
                 cout << "-" << " ";
