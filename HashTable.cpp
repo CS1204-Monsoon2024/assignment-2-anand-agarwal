@@ -78,7 +78,7 @@ public:
     }
 
     // Search for a key in the hash table
-    bool search(int value){
+    int search(int value){
         int i=0;
         int key;
         while (i<max){
@@ -143,7 +143,7 @@ public:
                 cout << "-" << " ";
             }
             else{
-                 cout << "table[i]" << " ";
+                 cout << table[i] << " ";
             }
             return;
         }
