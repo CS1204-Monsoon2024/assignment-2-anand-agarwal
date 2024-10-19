@@ -34,7 +34,7 @@ public:
         }
 
         while (i<max){
-            key= (hashFunction(value)+i^2)%capacity;
+            key= (hashFunction(value)+i * i)%capacity;
            if (table[key]==-1){
               table[key]==value;
               size++;
@@ -58,7 +58,7 @@ public:
         int key;
         int i=0;
         while ( i < max){
-            key= (hashFunction(value)+i^2)%capacity;
+            key= (hashFunction(value)+i * i)%capacity;
             if (table[key]==-1){
                 cout << "Element not found" << endl;
                 return;
@@ -82,7 +82,7 @@ public:
         int i=0;
         int key;
         while (i<max){
-            key= (hashFunction(value)+i^2)%capacity;
+            key= (hashFunction(value)+i * i)%capacity;
             if (table[key]==-1){
                 return -1; 
             }
