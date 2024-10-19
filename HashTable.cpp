@@ -7,11 +7,10 @@ using namespace std;
 
 class HashTable {
 private:
-    int capacity;          //key 
+    int capacity;          // key 
     std::vector<int> table;
     int size; 
-    int max;
-    double load_factor=0.8;    //size 
+    double load_factor_threshold = 0.8; // Threshold for load factor
 
     // Hash function to map values to key
     int hashFunction(int key) {
@@ -20,84 +19,74 @@ private:
 
 public:
     // Constructor
-     HashTable(int size) : capacity(size), table(size,-1), size(0){
-        max=capacity/2;
+    HashTable(int size) : capacity(size), table(size, -1), size(0) {}
 
-     }
+    // Get current load factor
+    double loadFactor() {
+        return static_cast<double>(size) / capacity;
+    }
 
     // Insert a key into the hash table
     void insert(int value) {
-        int i=0;
-        int key;
-        if ((size%capacity)>0.8){
+        if (loadFactor() > load_factor_threshold) {
             resize();
         }
 
-        while (i<max){
-            key= (hashFunction(value)+i * i)%capacity;
-           if (table[key]==-1){
-              table[key]=value;
-              size++;
-              return;
-            }
-            else if (table[key]==value){
+        int i = 0;
+        int key;
+
+        while (i < capacity) { // Use capacity instead of max
+            key = (hashFunction(value) + i * i) % capacity;
+            if (table[key] == -1) {
+                table[key] = value; // Fix assignment
+                size++;
+                return;
+            } else if (table[key] == value) {
                 cout << "Duplicate key insertion is not allowed" << endl;
                 return;
             }
             i++;
-
         }
         cout << "Max probing limit reached!" << endl;
-        return;
-
-
     }
 
     // Remove a key from the hash table
     void remove(int value) {
+        int i = 0;
         int key;
-        int i=0;
-        while ( i < max){
-            key= (hashFunction(value)+i * i)%capacity;
-            if (table[key]==-1){
+        while (i < capacity) { // Use capacity instead of max
+            key = (hashFunction(value) + i * i) % capacity;
+            if (table[key] == -1) {
                 cout << "Element not found" << endl;
                 return;
             }
-            if (table[key]==value){
-                table[key]=-1;
+            if (table[key] == value) {
+                table[key] = -1;
                 size--;
                 return;
             }
             i++;
         }
         cout << "Element not found" << endl;
-        return;
-
-
-        
     }
 
     // Search for a key in the hash table
-    int search(int value){
-        int i=0;
+    int search(int value) {
+        int i = 0;
         int key;
-        while (i<max){
-            key= (hashFunction(value)+i * i)%capacity;
-            if (table[key]==-1){
+        while (i < capacity) { // Use capacity instead of max
+            key = (hashFunction(value) + i * i) % capacity;
+            if (table[key] == -1) {
                 return -1; 
             }
-            if (table[key]==value){
-                return key;
+            if (table[key] == value) {
+                return key; // Return the index
             }
             i++;
-
-
-
         }
         return -1;
-
     }
-    
+
     void resize() {
         std::vector<int> old_table = table;
         int new_capacity = next_prime(capacity * 2);
@@ -111,41 +100,36 @@ public:
                 insert(value);
             }
         }
-        return;
     }
         
-    bool is_prime(int num){
-        if (num<=1){
+    bool is_prime(int num) {
+        if (num <= 1) {
             return false;
         }
-        for (int i=2; i<=sqrt(num); i++){
-            if (num%i==0){
-               return false;
+        for (int i = 2; i <= sqrt(num); i++) {
+            if (num % i == 0) {
+                return false;
             }
         }
         return true;
-
     }
 
-    int next_prime(int n){
-        while (is_prime(n)==false){
-            n+=1;
-
+    int next_prime(int n) {
+        while (!is_prime(n)) {
+            n += 1;
         }
         return n;
-
     }
 
     // Print the hash table
     void printTable() {
         for (int i = 0; i < capacity; i++) {
-            if (table[i]==-1){
+            if (table[i] == -1) {
                 cout << "-" << " ";
+            } else {
+                cout << table[i] << " "; // Fix the output
             }
-            else{
-                 cout << table[i] << " ";
-            }
-            return;
         }
+        cout << endl; // New line after printing
     }
 };
