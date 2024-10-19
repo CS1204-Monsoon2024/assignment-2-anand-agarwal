@@ -56,7 +56,7 @@ public:
     }
 
     // Print the hash table
-    void PrintTable() {
+    void printTable() {
         for (int i = 0; i < capacity; i++) {
             cout << "Bucket " << i << ": ";
             for (auto x : table[i])
