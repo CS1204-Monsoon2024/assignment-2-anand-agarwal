@@ -29,14 +29,14 @@ public:
     void insert(int value) {
         int i=0;
         int key;
-        if (load_factor>0.8){
+        if ((size%capacity)>0.8){
             resize();
         }
 
         while (i<max){
             key= (hashFunction(value)+i * i)%capacity;
            if (table[key]==-1){
-              table[key]==value;
+              table[key]=value;
               size++;
               return;
             }
