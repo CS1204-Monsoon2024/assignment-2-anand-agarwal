@@ -7,26 +7,26 @@ using namespace std;
 
 class HashTable {
 private:
-    int capacity;          // key 
+    int capacity;          
     std::vector<int> table;
     int size; 
-    double load_factor_threshold = 0.8; // Threshold for load factor
+    double load_factor_threshold = 0.8; 
 
-    // Hash function to map values to key
+    
     int hashFunction(int key) {
         return key % capacity;
     }
 
 public:
-    // Constructor
+    
     HashTable(int size) : capacity(size), table(size, -1), size(0) {}
 
-    // Get current load factor
+
     double loadFactor() {
         return static_cast<double>(size) / capacity;
     }
 
-    // Insert a key into the hash table
+  
     void insert(int value) {
         if (loadFactor() > load_factor_threshold) {
             resize();
@@ -35,10 +35,10 @@ public:
         int i = 0;
         int key;
 
-        while (i < capacity) { // Use capacity instead of max
+        while (i < capacity) { 
             key = (hashFunction(value) + i * i) % capacity;
             if (table[key] == -1) {
-                table[key] = value; // Fix assignment
+                table[key] = value; 
                 size++;
                 return;
             } else if (table[key] == value) {
@@ -50,7 +50,7 @@ public:
         cout << "Max probing limit reached!" << endl;
     }
 
-    // Remove a key from the hash table
+   
     void remove(int value) {
         int i = 0;
         int key;
@@ -70,17 +70,17 @@ public:
         cout << "Element not found" << endl;
     }
 
-    // Search for a key in the hash table
+    
     int search(int value) {
         int i = 0;
         int key;
-        while (i < capacity) { // Use capacity instead of max
+        while (i < capacity) { 
             key = (hashFunction(value) + i * i) % capacity;
             if (table[key] == -1) {
                 return -1; 
             }
             if (table[key] == value) {
-                return key; // Return the index
+                return key; 
             }
             i++;
         }
@@ -91,9 +91,9 @@ public:
         std::vector<int> old_table = table;
         int new_capacity = next_prime(capacity * 2);
         std::vector<int> new_table(new_capacity, -1);
-        table = new_table;  // Update table to new resized one
+        table = new_table; 
         capacity = new_capacity;
-        size = 0;  // Reset size and reinsert elements
+        size = 0;  
 
         for (int value : old_table) {
             if (value != -1) {
@@ -127,9 +127,9 @@ public:
             if (table[i] == -1) {
                 cout << "-" << " ";
             } else {
-                cout << table[i] << " "; // Fix the output
+                cout << table[i] << " "; 
             }
         }
-        cout << endl; // New line after printing
+        cout << endl; 
     }
 };
